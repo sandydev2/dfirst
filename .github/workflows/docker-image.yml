@@ -18,7 +18,6 @@ jobs:
         run: |
           TAG=$(date +%Y%m%d%H%M%S)
           docker image build -t sandydev2/python:$TAG .
-          docker login -u dev -p dckr_pat_y4acPrmgFo9TW-EQiQPXcxI1WPc
-          docker tag dev/python:$TAG sandydev2/python:latest
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker tag sandydev2/python:$TAG sandydev2/python:latest
           docker push sandydev2/python:$TAG
-          docker push sandydev2/python:latest
