@@ -1,0 +1,24 @@
+name: python application
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and push Docker image
+        env:
+          DOCKER_USERNAME: ${{ secrets.sandydev2 }}
+          DOCKER_PASSWORD: ${{ secrets.dckr_pat_y4acPrmgFo9TW-EQiQPXcxI1WPc }}
+        run: |
+          TAG=$(date +%Y%m%d%H%M%S)
+          docker image build -t sandydev2/python:$TAG .
+          docker login -u dev -p dckr_pat_y4acPrmgFo9TW-EQiQPXcxI1WPc
+          docker tag dev/python:$TAG sandydev2/python:latest
+          docker push sandydev2/python:$TAG
+          docker push sandydev2/python:latest
